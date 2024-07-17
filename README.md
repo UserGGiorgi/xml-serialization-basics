@@ -1,93 +1,222 @@
-# xml-serialization-basics
+# XML Serialization Basics
+
+A beginner level task for practicing XML serialization with attributes.
+
+In this task a student will learn the basics of XML serialization, will get acquainted with XML serialization attributes from `System.Xml.Serialization` namespace, and will learn how to use serialization attributes for managing the serialization process.
+Before starting the task learn [how to use attributes in C#](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes).
+
+Estimated time to complete the task: 2h.
+
+The task requires .NET 8 SDK installed.
+
+## Task Description
+
+**To complete the task, you need to take 9 steps**. Be aware that the order of XML elements is important for a successful unit test run. The task difficulty is growing from step to step, so the latest step is the most difficult.
+
+To successfully complete the task, please review the article [XML and SOAP serialization](https://learn.microsoft.com/en-us/dotnet/standard/serialization/xml-and-soap-serialization) and the first section of the article [XML serialization](https://learn.microsoft.com/en-us/dotnet/standard/serialization/introducing-xml-serialization).
 
 
+### 1. Serialize a Simple Class
 
-## Getting started
+First, read the following section: [Serialization of a Simple Class](https://learn.microsoft.com/en-us/dotnet/standard/serialization/introducing-xml-serialization#serialization-of-a-simple-class) and [Items That Can Be Serialized](https://learn.microsoft.com/en-us/dotnet/standard/serialization/introducing-xml-serialization#items-that-can-be-serialized).
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Now, add auto-implemented properties with the public access modifier to the [SerializationWithoutAttributes/BookInfo](XmlSerializationBasics/SerializationWithoutAttributes/BookInfo.cs) class using information from the table below. Please be aware that the members' order affects the unit test results.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+| Order | Member's Name   | Data Type | Member Type               | Access Modifier |
+|-------|-----------------|-----------|---------------------------|-----------------|
+| 1     | Title           | string    | Auto-implemented property | public          |
+| 2     | Price           | decimal   | Auto-implemented property | public          |
+| 3     | Genre           | string    | Auto-implemented property | public          |
+| 4     | Isbn            | string    | Auto-implemented property | public          |
+| 5     | PublicationDate | string    | Auto-implemented property | public          |
 
-## Add your files
+Then, review the article on [how to: serialize an object](https://learn.microsoft.com/en-us/dotnet/standard/serialization/how-to-serialize-an-object). Before moving to the next step, analyze the `SerializeAndCompareWithSample<T>` method in the [SerializationTestFixtureBase](XmlSerializationBasics.Tests/SerializationTestFixtureBase.cs#L21) class and figure out how _XmlSerializer_ class is used there.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Now, debug the [SerializeAndCompareWithSample](XmlSerializationBasics.Tests/SerializationWithoutAttributes/BookInfoTests.cs#L13) unit test in the [BookInfoTests.cs](XmlSerializationBasics.Tests/SerializationWithoutAttributes/BookInfoTests.cs) file and inspect the value of [actualXml](XmlSerializationBasics.Tests/SerializationTestFixtureBase.cs#L25) variable.
 
+
+### 2. Control the Object Serialization with the XmlElement Attribute
+
+Read the article [Attributes That Control XML Serialization](https://learn.microsoft.com/en-us/dotnet/standard/serialization/attributes-that-control-xml-serialization).
+
+Apply `XmlRootAttribute` attribute with `ElementName` property to the [SerializationWithXmlElement/BookInfo](XmlSerializationBasics/SerializationWithXmlElement/BookInfo.cs) class to set `book` as the XML root element name.
+
+Code sample:
+
+```cs
+[XmlRoot(ElementName = "book")]
+public class BookInfo
 ```
-cd existing_repo
-git remote add origin https://autocode.git.epam.com/dotnet-tasks/data-formats/net8/xml-serialization-basics.git
-git branch -M main
-git push -uf origin main
+
+Add auto-implemented properties with specified access modifier to the `BookInfo` class using information from the table below.
+Now, apply the `XmlElementAttribute` attributes with `ElementName` properties to set XML element names.
+
+| Order | Member's Name   | Data Type |  Member Type               | Access Modifier | XML Element Name      |
+|-------|-----------------|-----------|----------------------------|-----------------|-----------------------|
+| 1     | Title           | string    | Auto-implemented property  | public          | book-title            |
+| 2     | Price           | decimal   | Auto-implemented property  | public          | book-price            |
+| 3     | Genre           | string    | Auto-implemented property  | public          | book-genre            |
+| 4     | Isbn            | string    | Auto-implemented property  | public          | book-isbn             |
+| 5     | PublicationDate | string    | Auto-implemented property  | public          | book-publication-date |
+
+Code sample:
+
+```cs
+[XmlElement(ElementName = "book-title")]
+public string Title { get; set; }
 ```
 
-## Integrate with your tools
 
-- [ ] [Set up project integrations](https://autocode.git.epam.com/dotnet-tasks/data-formats/net8/xml-serialization-basics/-/settings/integrations)
+### 3. Customize the Object Serialization with the Namespace and Order Properties
 
-## Collaborate with your team
+Copy the `BookInfo` class from step 2 to the [SerializationWithOrder/BookInfo](XmlSerializationBasics/SerializationWithOrder/BookInfo.cs) class.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Both `XmlRootAttribute` and `XmlElementAttribute` attributes have constructors that allow setting the name of an XML element. Read the documentation pages for `XmlRootAttribute` and `XmlElementAttribute` constructors and use the constructors to set the name for XML elements.
 
-## Test and Deploy
+Code sample:
 
-Use the built-in continuous integration in GitLab.
+```cs
+[XmlRoot("book")]
+public class BookInfo
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Use the `Namespace` property of the `XmlRootAttribute` class to set [contoso.com/book](http://contoso.com/book) URI as the namespace for the root element of the `BookInfo` class:
 
-***
+```cs
+[XmlRoot("book", Namespace = "http://contoso.com/book")]
+public class BookInfo
+```
 
-# Editing this README
+Use the `Order` property of the `XmlElementAttribute` class to set the order of the element in the XML file as indicated in the XML Element Order column:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+| Order | Member's Name   | Data Type | Member Type               | Access Modifier | XML Element Name      | XML Element Order |
+|-------|-----------------|-----------|---------------------------|-----------------|-----------------------|-------------------|
+| 1     | Title           | string    | Auto-implemented property | public          | book-title            | 1                 |
+| 2     | Price           | decimal   | Auto-implemented property | public          | book-price            | 5                 |
+| 3     | Genre           | string    | Auto-implemented property | public          | book-genre            | 4                 |
+| 4     | Isbn            | string    | Auto-implemented property | public          | book-isbn             | 3                 |
+| 5     | PublicationDate | string    | Auto-implemented property | public          | book-publication-date | 2                 |
 
-## Suggestions for a good README
+Code sample:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```cs
+[XmlElement("book-title", Order = 1)]
+public string Title { get; set; }
+```
 
-## Name
-Choose a self-explaining name for your project.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### 4. Serialize a Class with Fields
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Apply the `XmlRootAttribute` attribute to the [FieldsSerialization/BookInfo](XmlSerializationBasics/FieldsSerialization/BookInfo.cs) class to set `book.info` as the name for the root XML element and [contoso.com/book-info](http://contoso.com/book-info) URI as the namespace.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+| XML Root Element Name | XML Root Element Namespace   |
+|-----------------------|------------------------------|
+| book.info             | http://contoso.com/book-info |
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Apply the `XmlElementAttribute` attributes for the fields `Price` and `Genre` as well as for the properties `Title`, `Isbn`, and `PublicationDate` to set the name and the order of the elements as in the table below:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+| Order | Member's Name   | Data Type |  Member Type               | Access Modifier | XML Element Name      | XML Element Order |
+|-------|-----------------|-----------|----------------------------|-----------------|-----------------------|-------------------|
+| 1     | Price           | decimal   | Field                      | public          | sell.price            | 4                 |
+| 2     | Genre           | string    | Field                      | public          | category              | 1                 |
+| 3     | isbn            | string    | Field                      | private         | -                     | -                 |
+| 4     | publicationDate | string    | Field                      | private         | -                     | -                 |
+| 5     | Title           | string    | Auto-implemented property  | public          | book.title            | 2                 |
+| 3     | Isbn            | string    | Property                   | public          | book.number           | 5                 |
+| 4     | PublicationDate | string    | Property                   | public          | pub.date              | 3                 |
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Fields `ISBN` and `publicationDate` should not be serialized, so apply the `XmlIgnoreAttribute` attribute to these fields.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Run unit tests, inspect the `actualResult`, and analyze the expected XML file [fields-serialization.xml](XmlSerializationBasics.Tests/FieldsSerialization/fields-serialization.xml).
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+*Note:* The use of public fields instead of properties is [a bad practice for production applications](https://softwareengineering.stackexchange.com/questions/161303/is-it-bad-practice-to-use-public-fields). We use public fields in this task only for demonstration purposes. Read more about the benefits of properties in the article by Jon Skeet ["Why Properties Matter"](https://csharpindepth.com/articles/PropertiesMatter).
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### 5. Control the Object Serialization with the XmlAttribute Attribute
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Apply the `XmlRootAttribute` attribute to the [SerializationWithXmlAttributes/BookInfo](XmlSerializationBasics/SerializationWithXmlAttributes/BookInfo.cs) class using information from the table below:
 
-## License
-For open source projects, say how it is licensed.
+| XML Root Element Name | XML Root Element Namespace |
+|-----------------------|----------------------------|
+| book                  | http://contoso.com/book    |
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Add auto-implemented properties with the specified access modifier to the `BookInfo` class using information from the table below. The, apply `XmlAttributeAttribute` attributes to specify that the `XmlSerializer` must serialize the class members as XML attributes:
+
+| Order | Member's Name   | Data Type | Member Type                | Access Modifier | XML Attribute Name      |
+|-------|-----------------|-----------|----------------------------|-----------------|-------------------------|
+| 1     | Title           | string    | Auto-implemented property  | public          | title                   |
+| 2     | Price           | decimal   | Auto-implemented property  | public          | price                   |
+| 3     | Genre           | string    | Auto-implemented property  | public          | genre                   |
+| 4     | Isbn            | string    | Auto-implemented property  | public          | isbn                    |
+| 5     | PublicationDate | string    | Auto-implemented property  | public          | publication-date        |
+
+Code sample:
+
+```cs
+[XmlAttribute("title")]
+public string Title { get; set; }
+```
+
+
+### 6. Serialize Complex Structures
+
+Apply `XmlRootAttribute`, `XmlElementAttribute`, and `XmlAttributeAttribute` to classes in the [ComplexStructures](XmlSerializationBasics/ComplexStructures) folder ([BookInfo](XmlSerializationBasics/ComplexStructures/BookInfo.cs), [BookTitle](XmlSerializationBasics/ComplexStructures/BookTitle.cs), [BookPrice](XmlSerializationBasics/ComplexStructures/BookPrice.cs), and [BookPublicationDate](XmlSerializationBasics/ComplexStructures/BookPublicationDate.cs)) and the class members to ensure correct serialization of the `BookInfo` class. The final XML file should look like [complex-structures.xml](XmlSerializationBasics.Tests/ComplexStructures/complex-structures.xml) XML file.
+
+
+### 7. Serialize an Array as a Sequence of Elements
+
+Read the section [Serializing an Array as a Sequence of Elements](https://learn.microsoft.com/en-us/dotnet/standard/serialization/controlling-xml-serialization-using-attributes#serializing-an-array-as-a-sequence-of-elements).
+
+Analyze the expected XML file [sequence.xml](XmlSerializationBasics.Tests/Sequence/sequence.xml) and take the following steps:
+* Add auto-implemented properties to the [Sequence/BookInfo](XmlSerializationBasics/Sequence/BookInfo.cs) class using the information from the table below.
+* Apply the `XmlRootAttribute` attribute to the `BookInfo` class.
+* Apply the `XmlElementAttribute` attributes to the properties.
+
+| Order | Member's Name    | Data Type   | Member Type                | Access Modifier | XML Element Name                   | XML Element Order  |
+|-------|------------------|-------------|----------------------------|-----------------|------------------------------------|--------------------|
+| 1     | Titles           | string[]    | Auto-implemented property  | public          | title                              | 3                  |
+| 2     | Prices           | decimal[]   | Auto-implemented property  | public          | price                              | 4                  |
+| 3     | Genres           | string[]    | Auto-implemented property  | public          | genre                              | 1                  |
+| 4     | Codes            | string[]    | Auto-implemented property  | public          | international-standard-book-number | 2                  |
+| 5     | PublicationDates | string[]    | Auto-implemented property  | public          | publication-date                   | 5                  |
+
+
+### 8. Serialize an Array of Objects
+
+Read the sections [Serializing an Array of Objects](https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization#serializing-an-array-of-objects) and [Controlling Array Serialization](https://learn.microsoft.com/en-us/dotnet/standard/serialization/controlling-xml-serialization-using-attributes#controlling-array-serialization).
+
+Analyze the expected XML file [arrays.xml](XmlSerializationBasics.Tests/Arrays/arrays.xml) and take the following steps:
+* Add auto-implemented properties to the [Arrays/BookInfo](XmlSerializationBasics/Arrays/BookInfo.cs) class using the information from the table below.
+* Apply the `XmlRootAttribute` attribute to the `BookInfo` class.
+* Apply the `XmlArrayAttribute` and `XmlArrayItemAttribute` attributes to the properties.
+
+| Order | Member's Name    | Data Type   | Member Type                | Access Modifier | XML Array Element Name              | XML Array Element Item Name        | XML Element Order |
+|-------|------------------|-------------|----------------------------|-----------------|-------------------------------------|------------------------------------|-------------------|
+| 1     | Titles           | string[]    | Auto-implemented property  | public          | titles                              | title                              | 1                 |
+| 2     | Prices           | decimal[]   | Auto-implemented property  | public          | prices                              | price                              | 5                 |
+| 3     | Genres           | string[]    | Auto-implemented property  | public          | genres                              | genre                              | 2                 |
+| 4     | Codes            | string[]    | Auto-implemented property  | public          | international-standard-book-numbers | international-standard-book-number | 4                 |
+| 5     | PublicationDates | string[]    | Auto-implemented property  | public          | publication-dates                   | publication-date                   | 3                 |
+
+
+### 9. Purchase Order
+
+Read the section [Purchase Order Example](https://learn.microsoft.com/en-us/dotnet/standard/serialization/examples-of-xml-serialization#purchase-order-example). A similar data structure is used in this step.
+
+Analyze the expected XML file [purchase-order.xml](XmlSerializationBasics.Tests/PurchaseOrderExample/purchase-order.xml). Apply all necessary attributes from the [System.Xml.Serialization namespace](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization) to classes in the [PurchaseOrderExample](XmlSerializationBasics/PurchaseOrderExample) folder ([PurchaseOrder](XmlSerializationBasics/PurchaseOrderExample/PurchaseOrder.cs), [Address](XmlSerializationBasics/PurchaseOrderExample/Address.cs), [DeliveryDate](XmlSerializationBasics/PurchaseOrderExample/DeliveryDate.cs), and [OrderedItem](XmlSerializationBasics/PurchaseOrderExample/OrderedItem.cs)) to ensure that the actual XML produced by `XmlSerializer` conforms to the expected XML file.
+
+
+## See Also
+
+* C# Programming Guide
+  * [Auto-Implemented Properties](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties)
+  * [Access Modifiers](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers)
+  * [Attributes](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes)
+* .NET API
+  * [XmlSerializer Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlserializer)
+  * [XmlRootAttribute Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlrootattribute)
+  * [XmlElementAttribute Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlelementattribute)
+  * [XmlAttributeAttribute Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlattributeattribute)
+  * [XmlIgnore Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlignoreattribute)
+  * [XmlArrayAttribute Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlarrayattribute)
+  * [XmlArrayItemAttribute Class](https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.xmlarrayitemattribute)
