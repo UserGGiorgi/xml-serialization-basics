@@ -1,9 +1,8 @@
-namespace XmlSerializationBasics.ComplexStructures
-{
-    public class BookTitle
-    {
-        public string? Title { get; set; }
+namespace XmlSerializationBasics.ComplexStructures;
 
-        public string? Language { get; set; }
-    }
+public class BookTitle
+{
+    public string? Title { get; set; }
+
+    public string? Language { get; set; }
 }

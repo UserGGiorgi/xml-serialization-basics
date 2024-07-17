@@ -1,6 +1,3 @@
-namespace XmlSerializationBasics.SerializationWithoutAttributes
-{
-    public class BookInfo
-    {
-    }
-}
+namespace XmlSerializationBasics.SerializationWithoutAttributes;
+
+public class BookInfo;

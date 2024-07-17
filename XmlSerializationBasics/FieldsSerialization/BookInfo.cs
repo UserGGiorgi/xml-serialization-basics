@@ -1,41 +1,40 @@
-namespace XmlSerializationBasics.FieldsSerialization
+namespace XmlSerializationBasics.FieldsSerialization;
+
+public class BookInfo
 {
-    public class BookInfo
+    public decimal Price;
+
+    public string? Genre;
+
+    private string? isbn;
+
+    private string? publicationDate;
+
+    public string? Title { get; set; }
+
+    public string? Isbn
     {
-        public decimal Price;
-
-        public string? Genre;
-
-        private string? isbn;
-
-        private string? publicationDate;
-
-        public string? Title { get; set; }
-
-        public string? Isbn
+        get
         {
-            get
-            {
-                return this.isbn;
-            }
-
-            set
-            {
-                this.isbn = value;
-            }
+            return this.isbn;
         }
 
-        public string? PublicationDate
+        set
         {
-            get
-            {
-                return this.publicationDate;
-            }
+            this.isbn = value;
+        }
+    }
 
-            set
-            {
-                this.publicationDate = value;
-            }
+    public string? PublicationDate
+    {
+        get
+        {
+            return this.publicationDate;
+        }
+
+        set
+        {
+            this.publicationDate = value;
         }
     }
 }

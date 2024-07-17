@@ -1,9 +1,8 @@
-namespace XmlSerializationBasics.ComplexStructures
-{
-    public class BookPrice
-    {
-        public decimal Price { get; set; }
+namespace XmlSerializationBasics.ComplexStructures;
 
-        public string? Currency { get; set; }
-    }
+public class BookPrice
+{
+    public decimal Price { get; set; }
+
+    public string? Currency { get; set; }
 }

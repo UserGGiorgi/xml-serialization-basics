@@ -1,6 +1,3 @@
-namespace XmlSerializationBasics.SerializationWithOrder
-{
-    public class BookInfo
-    {
-    }
-}
+namespace XmlSerializationBasics.SerializationWithOrder;
+
+public class BookInfo;

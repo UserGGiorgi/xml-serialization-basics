@@ -1,6 +1,3 @@
-namespace XmlSerializationBasics.Sequence
-{
-    public class BookInfo
-    {
-    }
-}
+namespace XmlSerializationBasics.Sequence;
+
+public class BookInfo;

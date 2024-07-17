@@ -1,6 +1,3 @@
-namespace XmlSerializationBasics.SerializationWithXmlElement
-{
-    public class BookInfo
-    {
-    }
-}
+namespace XmlSerializationBasics.SerializationWithXmlElement;
+
+public class BookInfo;
