@@ -12,7 +12,6 @@ public class BookInfoTests : SerializationTestFixtureBase
     [Test]
     public void SerializeAndCompareWithSample()
     {
-        // Arrange
         var book = new BookInfo();
 
         Type bookInfoType = typeof(BookInfo);
@@ -22,10 +21,8 @@ public class BookInfoTests : SerializationTestFixtureBase
         bookInfoType.GetProperty("Isbn")?.SetValue(book, "1-861001-57-8");
         bookInfoType.GetProperty("PublicationDate")?.SetValue(book, "1823-01-28");
 
-        // Act
         Diff diff = this.SerializeAndCompareWithSample(book, SampleFileName);
 
-        // Assert
         Assert.That(diff.HasDifferences(), Is.False, diff.ToString());
     }
 }

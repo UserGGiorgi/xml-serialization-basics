@@ -12,7 +12,6 @@ public class BookInfoTests : SerializationTestFixtureBase
     [Test]
     public void SerializeAndCompareWithSample()
     {
-        // Arrange
         var book = new BookInfo
         {
             Title = new BookTitle { Title = "Pride And Prejudice", Language = "English", },
@@ -21,14 +20,15 @@ public class BookInfoTests : SerializationTestFixtureBase
             Isbn = "1-861001-57-8",
             PublicationDate = new BookPublicationDate
             {
-                Day = 28, Month = 01, Year = 1823, FirstPublication = true,
+                Day = 28,
+                Month = 01,
+                Year = 1823,
+                FirstPublication = true,
             },
         };
 
-        // Act
         Diff diff = this.SerializeAndCompareWithSample(book, SampleFileName);
 
-        // Assert
         Assert.That(diff.HasDifferences(), Is.False, diff.ToString());
     }
 }

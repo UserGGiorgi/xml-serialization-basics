@@ -12,7 +12,6 @@ public class PurchaseOrderTests : SerializationTestFixtureBase
     [Test]
     public void SerializeAndCompareWithSample()
     {
-        // Arrange
         var purchaseOrder = new PurchaseOrder
         {
             ShipTo = new Address
@@ -45,10 +44,8 @@ public class PurchaseOrderTests : SerializationTestFixtureBase
         purchaseOrder.CalculateSubTotal();
         purchaseOrder.CalculateTotalCost();
 
-        // Act
         Diff diff = this.SerializeAndCompareWithSample(purchaseOrder, SampleFileName);
 
-        // Assert
         Assert.That(diff.HasDifferences(), Is.False, diff.ToString());
     }
 }

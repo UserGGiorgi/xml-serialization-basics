@@ -21,7 +21,6 @@ public abstract class SerializationTestFixtureBase
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
         xmlSerializer.Serialize(stringWriter, obj);
 
-        // Add a breakpoint here to inspect the values of actualXml and expectedXml variables.
         string actualXml = stringBuilder.ToString();
         Stream? stream = ReadTestXmlStreamReader(testFileName);
         using StreamReader stringReader = new StreamReader(stream!);
