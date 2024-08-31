@@ -2,18 +2,18 @@ using System.Xml.Serialization;
 
 namespace XmlSerializationBasics.ComplexStructures;
 
-[XmlRoot("book-publication-date", Namespace = "http://contoso.com/book")]
+[XmlRoot("book-publication-date")]
 public class BookPublicationDate
 {
-    [XmlElement("day")]
+    [XmlElement("publication-day")]
     public int Day { get; set; }
 
-    [XmlElement("month")]
+    [XmlElement("publication-month")]
     public int Month { get; set; }
 
-    [XmlElement("year")]
+    [XmlElement("publication-year")]
     public int Year { get; set; }
 
-    [XmlElement("first-publication")]
+    [XmlAttribute("first-publication")]
     public bool FirstPublication { get; set; }
 }

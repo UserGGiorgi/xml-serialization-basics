@@ -1,15 +1,23 @@
+using System.Xml.Serialization;
+
 namespace XmlSerializationBasics.PurchaseOrderExample;
 
+[XmlRoot("order-item", Namespace = "http://www.cpandl.com/purchase-order-item")]
 public class OrderedItem
 {
-    public string? ItemName { get; set; }
-
-    public string? Description { get; set; }
-
+    [XmlAttribute("unit-price")]
     public decimal UnitPrice { get; set; }
 
+    [XmlAttribute("quantity")]
     public int Quantity { get; set; }
 
+    [XmlElement("order-item-name")]
+    public string? ItemName { get; set; }
+
+    [XmlElement("order-item-description")]
+    public string? Description { get; set; }
+
+    [XmlIgnore]
     public decimal LineTotal { get; set; }
 
     public void CalculateLineTotal()

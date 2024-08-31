@@ -2,12 +2,12 @@ using System.Xml.Serialization;
 
 namespace XmlSerializationBasics.ComplexStructures;
 
-[XmlRoot("book-title", Namespace = "http://contoso.com/book")]
+[XmlRoot("book-title")]
 public class BookTitle
 {
-    [XmlElement("title")]
+    [XmlElement("text")]
     public string? Title { get; set; }
 
-    [XmlElement("language")]
+    [XmlAttribute("language")]
     public string? Language { get; set; }
 }

@@ -2,21 +2,21 @@ using System.Xml.Serialization;
 
 namespace XmlSerializationBasics.ComplexStructures;
 
-[XmlRoot("book-info", Namespace = "http://contoso.com/book")]
+[XmlRoot("book-description", Namespace = "http://contoso.com/book-description")]
 public class BookInfo
 {
-    [XmlAttribute("title")]
+    [XmlElement("book-title")]
     public BookTitle? Title { get; set; }
 
-    [XmlAttribute("price")]
+    [XmlElement("book-price")]
     public BookPrice? Price { get; set; }
 
-    [XmlAttribute("genre")]
+    [XmlElement("book-genre")]
     public string? Genre { get; set; }
 
-    [XmlAttribute("isbn")]
+    [XmlElement("book-isbn")]
     public string? Isbn { get; set; }
 
-    [XmlAttribute("publication-date")]
+    [XmlElement("book-publication-date")]
     public BookPublicationDate? PublicationDate { get; set; }
 }
